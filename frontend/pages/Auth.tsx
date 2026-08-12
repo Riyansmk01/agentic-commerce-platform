@@ -52,12 +52,12 @@ export default function Auth() {
             <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center shadow-xs">
               <Boxes size={18} className="text-white" />
             </div>
-            <span className="font-semibold text-slate-900 tracking-tight">Mahasi Commerce</span>
+            <span className="font-semibold text-slate-900 tracking-tight">CoreStudy</span>
           </Link>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-          <h1 className="text-lg font-semibold text-slate-900 text-center tracking-tight mb-1">Sign in to Mahasi Commerce</h1>
+          <h1 className="text-lg font-semibold text-slate-900 text-center tracking-tight mb-1">Sign in to CoreStudy</h1>
           <p className="text-xs text-slate-500 text-center mb-6">Enterprise agentic commerce platform for Indonesian merchants</p>
 
           <div className="space-y-4">

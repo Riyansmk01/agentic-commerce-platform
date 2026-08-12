@@ -96,7 +96,7 @@ export default function Playground() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Agent Playground — Mahasi AI Commerce"
+        title="Agent Playground — CoreStudy AI Commerce"
         subtitle="Test natural language discovery queries using live Gemini, Groq, OpenAI, Mistral & NVIDIA engines"
       />
 
@@ -163,7 +163,7 @@ export default function Playground() {
             {AI_PROVIDERS.find(p => p.id === selectedProvider)?.name}
           </span>
           <span className="text-xs px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 font-mono text-emerald-800 font-semibold">
-            Merchant: mahasi
+            Merchant: corestudy
           </span>
           <span className="text-xs px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 font-mono text-blue-800 font-semibold">
             Pakasir QRIS Ready

@@ -28,7 +28,7 @@ export default function Developers() {
             <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center shadow-xs">
               <Boxes size={16} className="text-white" />
             </div>
-            <span className="font-semibold text-sm tracking-tight text-slate-900">Mahasi Commerce</span>
+            <span className="font-semibold text-sm tracking-tight text-slate-900">CoreStudy</span>
           </Link>
           <Link to="/auth">
             <Button size="sm" className="bg-slate-900 hover:bg-slate-800 text-white">
@@ -47,7 +47,7 @@ export default function Developers() {
           <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Documentation</div>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-3">Developer Infrastructure</h1>
           <p className="text-slate-600 text-base max-w-2xl leading-relaxed">
-            Mahasi Commerce exposes structured REST APIs and Model Context Protocol (MCP) tools enabling AI agents to query product availability, retrieve policy constraints, and create validated checkout sessions.
+            CoreStudy exposes structured REST APIs and Model Context Protocol (MCP) tools enabling AI agents to query product availability, retrieve policy constraints, and create validated checkout sessions.
           </p>
         </div>
 

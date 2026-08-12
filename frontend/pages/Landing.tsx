@@ -46,7 +46,7 @@ export default function Landing() {
               <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center shadow-xs">
                 <Boxes size={16} className="text-white" />
               </div>
-              <span className="font-semibold text-sm tracking-tight text-slate-900">Mahasi Commerce</span>
+              <span className="font-semibold text-sm tracking-tight text-slate-900">CoreStudy</span>
             </Link>
             <div className="hidden md:flex items-center gap-6 text-xs font-medium text-slate-600">
               <a href="#product" className="hover:text-slate-900 transition-colors">Product</a>
@@ -86,7 +86,7 @@ export default function Landing() {
           </h1>
 
           <p className="mt-6 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-            Mahasi Commerce connects your product inventory, pricing, availability, and checkout directly to AI agents — enabling seamless autonomous product discovery and purchases for Indonesian merchants.
+            CoreStudy connects your product inventory, pricing, availability, and checkout directly to AI agents — enabling seamless autonomous product discovery and purchases for Indonesian merchants.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3.5 mt-9">
@@ -170,7 +170,7 @@ export default function Landing() {
                 Connect once. Stay discoverable forever.
               </h2>
               <p className="text-slate-600 mb-8 leading-relaxed text-sm">
-                Mahasi Commerce provides structured APIs that make your catalog discoverable by LLM agents, assistants, and automated procurement bots.
+                CoreStudy provides structured APIs that make your catalog discoverable by LLM agents, assistants, and automated procurement bots.
               </p>
 
               <div className="space-y-4">
@@ -216,7 +216,7 @@ export default function Landing() {
 
               <div className="pt-2 text-slate-500">// 3. System returns server-validated checkout URL</div>
               <div className="text-emerald-400 bg-emerald-950/40 p-2.5 rounded border border-emerald-800/40">
-                {`{ "status": "active", "checkoutUrl": "https://mahasi.commerce/checkout/chk_9012" }`}
+                {`{ "status": "active", "checkoutUrl": "https://corestudy.commerce/checkout/chk_9012" }`}
               </div>
             </div>
           </div>
@@ -245,7 +245,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-2 font-medium text-slate-900">
             <Boxes size={15} className="text-slate-900" />
-            <span>Mahasi Commerce</span>
+            <span>CoreStudy</span>
           </div>
           <div className="flex gap-6">
             <Link to="/developers" className="hover:text-slate-900 transition-colors">Developers</Link>

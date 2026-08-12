@@ -42,7 +42,7 @@ export default function Payments() {
   const [loading, setLoading] = useState(false);
 
   const pakasirKey = import.meta.env.VITE_PAKASIR_API_KEY;
-  const merchantSlug = import.meta.env.VITE_MERCHANT_SLUG || "mahasi";
+  const merchantSlug = import.meta.env.VITE_MERCHANT_SLUG || "corestudy";
 
   const refresh = async () => {
     setLoading(true);
@@ -89,7 +89,7 @@ export default function Payments() {
     <div className="space-y-6">
       <PageHeader
         title="Payment Transactions"
-        subtitle="Gateway settlements, Pakasir QRIS, and transaction pipeline for mahasi"
+        subtitle="Gateway settlements, Pakasir QRIS, and transaction pipeline for corestudy"
         actions={
           <Button
             variant="outline"

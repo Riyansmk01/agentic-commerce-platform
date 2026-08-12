@@ -40,8 +40,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           role: "owner",
           avatarUrl: su.user_metadata?.avatar_url || su.user_metadata?.picture,
           provider: "google",
-          organizationId: currentStored?.organizationId || "org_mahasi_01",
-          organizationSlug: currentStored?.organizationSlug || "mahasi",
+          organizationId: currentStored?.organizationId || "org_corestudy_01",
+          organizationSlug: currentStored?.organizationSlug || "corestudy",
         };
         setStoredUser(googleUser);
         setUser(googleUser);
@@ -68,12 +68,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const demoGoogleUser: AuthUser = {
         id: `usr_google_${Math.random().toString(36).slice(2, 9)}`,
         email: "merchant.google@example.com",
-        name: "Mahasi Merchant User",
+        name: "CoreStudy Merchant User",
         role: "owner",
         avatarUrl: "https://lh3.googleusercontent.com/a/default-user=s96-c",
         provider: "google",
-        organizationId: "org_mahasi_01",
-        organizationSlug: "mahasi",
+        organizationId: "org_corestudy_01",
+        organizationSlug: "corestudy",
       };
       setStoredUser(demoGoogleUser);
       setUser(demoGoogleUser);
@@ -88,8 +88,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       name,
       role: "owner",
       provider: "email",
-      organizationId: stored?.organizationId || "org_mahasi_01",
-      organizationSlug: stored?.organizationSlug || "mahasi",
+      organizationId: stored?.organizationId || "org_corestudy_01",
+      organizationSlug: stored?.organizationSlug || "corestudy",
     };
     setStoredUser(newUser);
     setUser(newUser);

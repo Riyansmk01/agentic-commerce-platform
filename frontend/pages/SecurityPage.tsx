@@ -53,7 +53,7 @@ export default function SecurityPage() {
             <div className="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center shadow-xs">
               <Boxes size={16} className="text-white" />
             </div>
-            <span className="font-semibold text-sm tracking-tight text-slate-900">Mahasi Commerce</span>
+            <span className="font-semibold text-sm tracking-tight text-slate-900">CoreStudy</span>
           </Link>
         </div>
       </nav>
@@ -65,7 +65,7 @@ export default function SecurityPage() {
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-3">Security & Trust Model</h1>
           <p className="text-slate-600 max-w-xl mx-auto text-sm leading-relaxed">
-            Mahasi Commerce is designed as core infrastructure for payment and catalog data. Security controls, price verification, and merchant isolation are enforced at the protocol level.
+            CoreStudy is designed as core infrastructure for payment and catalog data. Security controls, price verification, and merchant isolation are enforced at the protocol level.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default function SecurityPage() {
         <div className="mt-12 p-6 rounded-xl border border-slate-200 bg-slate-50 text-center">
           <h3 className="font-semibold text-slate-900 text-sm mb-1">Responsible Disclosure</h3>
           <p className="text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
-            If you discover a potential vulnerability or security issue in Mahasi Commerce infrastructure, please report it to our engineering security team.
+            If you discover a potential vulnerability or security issue in CoreStudy infrastructure, please report it to our engineering security team.
           </p>
         </div>
       </div>

@@ -7,8 +7,8 @@ import { Key, Terminal, Globe, CreditCard, ChevronRight } from "lucide-react";
 const INTEGRATIONS = [
   {
     id: "pakasir",
-    title: "Pakasir Gateway (Mahasi)",
-    desc: "Indonesian payment gateway — Active API Key (Szv...J4L) and QRIS / VA processing for mahasi",
+    title: "Pakasir Gateway (CoreStudy)",
+    desc: "Indonesian payment gateway — Active API Key (Szv...J4L) and QRIS / VA processing for corestudy",
     icon: CreditCard,
     status: "active",
     href: "/app/payments",

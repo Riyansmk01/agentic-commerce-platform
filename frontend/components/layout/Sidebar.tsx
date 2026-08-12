@@ -52,7 +52,7 @@ export function Sidebar() {
             <Boxes size={18} className="text-white" />
           </div>
           {!collapsed && (
-            <span className="font-bold text-sm text-slate-900 tracking-tight truncate">Mahasi Commerce</span>
+            <span className="font-bold text-sm text-slate-900 tracking-tight truncate">CoreStudy</span>
           )}
         </Link>
         <button

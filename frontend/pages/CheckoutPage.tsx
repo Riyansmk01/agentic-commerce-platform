@@ -179,7 +179,7 @@ export default function CheckoutPage() {
         )}
 
         <div className="text-center mt-8 text-[11px] text-slate-400 font-medium">
-          Powered by Mahasi Commerce · Enterprise Infrastructure for AI Agents
+          Powered by CoreStudy · Enterprise Infrastructure for AI Agents
         </div>
       </div>
     </div>

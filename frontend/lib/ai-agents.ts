@@ -52,7 +52,7 @@ export async function executeAIQuery(
   const start = Date.now();
   const provider = AI_PROVIDERS.find(p => p.id === providerId) || AI_PROVIDERS[0];
 
-  const systemPrompt = `You are Mahasi Agentic Commerce Layer. Parse the user query against this catalog context and extract structured matching items.
+  const systemPrompt = `You are CoreStudy Agentic Commerce Layer. Parse the user query against this catalog context and extract structured matching items.
 Catalog: ${JSON.stringify(catalogContext)}
 Respond with concise JSON containing:
 {
