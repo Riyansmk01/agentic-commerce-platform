@@ -8,7 +8,7 @@ const INTEGRATIONS = [
   {
     id: "pakasir",
     title: "Pakasir Gateway (CoreStudy)",
-    desc: "Indonesian payment gateway — Active API Key (Szv...J4L) and QRIS / VA processing for corestudy",
+    desc: "Indonesian payment gateway — Active API Key (LNVt...WSk) and QRIS / VA processing for corestudy",
     icon: CreditCard,
     status: "active",
     href: "/app/payments",

@@ -112,7 +112,7 @@ export default function Payments() {
         <div className="flex-1 min-w-0">
           <div className="text-xs font-bold text-slate-900">Pakasir QRIS Gateway — Active</div>
           <div className="text-[11px] text-slate-600 font-mono mt-0.5">
-            Merchant: <span className="font-semibold">{merchantSlug}</span> · Key: Szv0...J4L · {pakasirCount} Pakasir transactions
+            Merchant: <span className="font-semibold">{merchantSlug}</span> · Key: LNVt...WSk · {pakasirCount} Pakasir transactions
           </div>
         </div>
         <span className="text-[11px] px-2 py-0.5 rounded bg-blue-100 border border-blue-200 text-blue-700 font-semibold">
