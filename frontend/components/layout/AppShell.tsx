@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 import { CommandPalette } from "../CommandPalette";
+import { UniversalActivityDrawer } from "../UniversalActivityDrawer";
+import { SecondaryNav } from "./SecondaryNav";
 
 interface AppShellProps {
   children: ReactNode;
@@ -33,19 +35,24 @@ export function AppShell({ children }: AppShellProps) {
   }, [location.pathname]);
 
   return (
-    <div className="flex h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
+    <div className="flex flex-col h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
       {isNavigating && <div className="top-loader-bar" />}
-      <Sidebar />
-      <div className="flex flex-col flex-1 min-w-0 bg-white">
-        <TopBar onOpenCommandPalette={() => setCmdOpen(true)} />
-        <main className="flex-1 overflow-auto p-8 bg-white transition-opacity duration-200" key={location.pathname}>
-          <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-1 duration-200">
-            {children}
-          </div>
-        </main>
+      <TopBar onOpenCommandPalette={() => setCmdOpen(true)} />
+      
+      <div className="flex flex-1 min-h-0">
+        <Sidebar />
+        <div className="flex flex-col flex-1 min-w-0 bg-white shadow-[0_0_40px_rgba(0,0,0,0.03)] border-l border-slate-200 z-10 relative">
+          <SecondaryNav />
+          <main className="flex-1 overflow-auto p-8 bg-slate-50/50 transition-opacity duration-200" key={location.pathname}>
+            <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-1 duration-200">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
 
       <CommandPalette open={cmdOpen} onOpenChange={setCmdOpen} />
+      <UniversalActivityDrawer />
     </div>
   );
 }

@@ -23,6 +23,9 @@ import SecuritySettings from "./pages/SecuritySettings";
 import CheckoutPage from "./pages/CheckoutPage";
 import Developers from "./pages/Developers";
 import Security from "./pages/SecurityPage";
+import Customers from "./pages/Customers";
+import Segments from "./pages/Segments";
+import Workflows from "./pages/Workflows";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminMerchants from "./pages/admin/AdminMerchants";
 import AdminWebhooks from "./pages/admin/AdminWebhooks";
@@ -76,9 +79,21 @@ function AppRouter() {
       <Route path="/app/integrations/api" element={<ProtectedRoute><APIKeys /></ProtectedRoute>} />
       <Route path="/app/settings/general" element={<ProtectedRoute><GeneralSettings /></ProtectedRoute>} />
       <Route path="/app/settings/security" element={<ProtectedRoute><SecuritySettings /></ProtectedRoute>} />
+      <Route path="/app/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+      <Route path="/app/customers/segments" element={<ProtectedRoute><Segments /></ProtectedRoute>} />
+      <Route path="/app/operations/workflows" element={<ProtectedRoute><Workflows /></ProtectedRoute>} />
       <Route path="/internal/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
       <Route path="/internal/admin/merchants" element={<ProtectedRoute><AdminMerchants /></ProtectedRoute>} />
       <Route path="/internal/admin/webhooks" element={<ProtectedRoute><AdminWebhooks /></ProtectedRoute>} />
+      
+      {/* Domain Redirects */}
+      <Route path="/app/commerce" element={<Navigate to="/app/catalog" replace />} />
+      <Route path="/app/agents" element={<Navigate to="/app/agent-readiness" replace />} />
+      <Route path="/app/growth" element={<Navigate to="/app/analytics" replace />} />
+      <Route path="/app/operations" element={<Navigate to="/app/operations/workflows" replace />} />
+      <Route path="/app/developers" element={<Navigate to="/app/integrations/api" replace />} />
+      <Route path="/app/intelligence" element={<Navigate to="/app/analytics" replace />} />
+      
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

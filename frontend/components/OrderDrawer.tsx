@@ -46,11 +46,11 @@ export function OrderDrawer({ order, open, onOpenChange }: OrderDrawerProps) {
               </div>
               <div className="flex justify-between text-xs">
                 <span className="text-slate-500">Name</span>
-                <span className="text-slate-900 font-medium">{order.customerName ?? "Guest Buyer"}</span>
+                <span className="text-slate-900 font-medium">{(order.customerSnapshot as any)?.name || (order.customerSnapshot as any)?.firstName || "Guest Buyer"}</span>
               </div>
               <div className="flex justify-between text-xs pt-1 border-t border-slate-100">
                 <span className="text-slate-500">Email</span>
-                <span className="text-slate-900 font-mono">{order.customerEmail ?? "—"}</span>
+                <span className="text-slate-900 font-mono">{(order.customerSnapshot as any)?.email ?? "—"}</span>
               </div>
             </div>
 
