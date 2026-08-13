@@ -16,12 +16,30 @@ export default function Overview() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const orgId = user?.organizationId;
 
+  const [metrics, setMetrics] = useState<any>(null);
+
   useEffect(() => {
     if (!orgId) return;
-    backend.orders.listOrders({ organizationId: orgId, limit: 5 })
+    
+    // Fetch dashboard metrics
+    backend.analytics.getDashboardMetrics({ organizationId: orgId, days: 1 })
+      .then(r => setMetrics(r.metrics))
+      .catch(() => {});
+
+    // Fetch orders for revenue and live feed
+    backend.orders.listOrders({ organizationId: orgId, limit: 10 })
       .then(r => { if (r?.orders?.length > 0) setOrders(r.orders); })
       .catch(() => {});
   }, [orgId]);
+
+  const ordersToday = orders.length;
+  const revenueToday = orders.reduce((sum, o) => sum + o.totalAmount, 0);
+  const agentRevenue = orders.filter(o => o.sourceAgent).reduce((sum, o) => sum + o.totalAmount, 0);
+  
+  // Calculate a mock conversion based on checkouts vs lookups (or default 0)
+  const totalRequests = metrics?.totalAgentRequests || 0;
+  const checkouts = metrics?.checkoutsCreated || 0;
+  const conversion = totalRequests > 0 ? ((checkouts / totalRequests) * 100).toFixed(1) : "0.0";
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
@@ -36,20 +54,14 @@ export default function Overview() {
         <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs relative overflow-hidden">
           <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Revenue Today</div>
           <div className="flex items-end gap-3">
-            <div className="text-2xl font-bold text-slate-900">Rp18.420.000</div>
-          </div>
-          <div className="mt-3 flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 w-fit px-2 py-0.5 rounded-full">
-            <TrendingUp size={12} /> +18.4%
+            <div className="text-2xl font-bold text-slate-900">{formatCurrency(revenueToday, "IDR")}</div>
           </div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs relative overflow-hidden">
-          <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Orders Today</div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Recent Orders</div>
           <div className="flex items-end gap-3">
-            <div className="text-2xl font-bold text-slate-900">184</div>
-          </div>
-          <div className="mt-3 flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 w-fit px-2 py-0.5 rounded-full">
-            <TrendingUp size={12} /> +4.2%
+            <div className="text-2xl font-bold text-slate-900">{ordersToday}</div>
           </div>
         </div>
 
@@ -59,98 +71,45 @@ export default function Overview() {
             <SparklesIcon /> Agent Revenue
           </div>
           <div className="flex items-end gap-3">
-            <div className="text-2xl font-bold text-slate-900">Rp7.820.000</div>
-          </div>
-          <div className="mt-3 flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 w-fit px-2 py-0.5 rounded-full">
-            <TrendingUp size={12} /> +42%
+            <div className="text-2xl font-bold text-slate-900">{formatCurrency(agentRevenue, "IDR")}</div>
           </div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs relative overflow-hidden">
           <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Conversion</div>
           <div className="flex items-end gap-3">
-            <div className="text-2xl font-bold text-slate-900">6.8%</div>
-          </div>
-          <div className="mt-3 flex items-center gap-1.5 text-xs font-medium text-red-600 bg-red-50 w-fit px-2 py-0.5 rounded-full">
-            <TrendingDown size={12} /> -1.2%
+            <div className="text-2xl font-bold text-slate-900">{conversion}%</div>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        {/* Left Column: Needs Attention & Analytics */}
-        <div className="lg:col-span-2 space-y-8">
+        {/* Left Column: Analytics Stats */}
+        <div className="space-y-8">
           
-          <div className="space-y-4">
-            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-900 flex items-center gap-2">
-              <AlertTriangle size={16} className="text-amber-500" /> Needs Attention
-            </h2>
-            
-            <div className="bg-white border border-slate-200 rounded-xl shadow-2xs divide-y divide-slate-100">
-              <div className="flex items-start gap-4 p-4 hover:bg-slate-50 transition-colors cursor-pointer group">
-                <div className="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100 group-hover:scale-110 transition-transform">
-                  <ShoppingCart size={14} />
-                </div>
-                <div className="flex-1">
-                  <div className="text-sm font-semibold text-slate-900">14 checkout abandoned</div>
-                  <div className="text-xs text-slate-500 mt-1">High abandonment rate detected from Safari mobile users.</div>
-                </div>
-                <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity text-xs h-7">Review</Button>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 hover:bg-slate-50 transition-colors cursor-pointer group">
-                <div className="w-8 h-8 rounded-full bg-red-50 text-red-600 flex items-center justify-center shrink-0 border border-red-100 group-hover:scale-110 transition-transform">
-                  <Clock size={14} />
-                </div>
-                <div className="flex-1">
-                  <div className="text-sm font-semibold text-slate-900">Pakasir webhook latency increased</div>
-                  <div className="text-xs text-slate-500 mt-1">Payment confirmations are taking &gt;2s on average.</div>
-                </div>
-                <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity text-xs h-7">View Logs</Button>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 hover:bg-slate-50 transition-colors cursor-pointer group">
-                <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100 group-hover:scale-110 transition-transform">
-                  <Package size={14} />
-                </div>
-                <div className="flex-1">
-                  <div className="text-sm font-semibold text-slate-900">8 products low stock</div>
-                  <div className="text-xs text-slate-500 mt-1">Velocity Runner X and 7 others have less than 5 units remaining.</div>
-                </div>
-                <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity text-xs h-7">Restock</Button>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 hover:bg-slate-50 transition-colors cursor-pointer group">
-                <div className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 border border-indigo-100 group-hover:scale-110 transition-transform">
-                  <SparklesIcon />
-                </div>
-                <div className="flex-1">
-                  <div className="text-sm font-semibold text-slate-900">"running shoes 43" searched 182× but only 1 match</div>
-                  <div className="text-xs text-slate-500 mt-1">High intent search query is returning poor results for agents.</div>
-                </div>
-                <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity text-xs h-7">Analyze</Button>
-              </div>
-            </div>
-          </div>
-
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-2xs relative overflow-hidden">
             <div className="absolute top-0 right-0 p-32 bg-indigo-500/20 blur-[80px] mix-blend-screen pointer-events-none" />
             <h3 className="text-sm font-bold tracking-wider uppercase text-indigo-400 mb-6 flex items-center gap-2 relative z-10">
-              <SparklesIcon /> AI Operator
+              <SparklesIcon /> AI Agent Performance
             </h3>
             
-            <div className="relative z-10">
-              <div className="text-lg font-medium text-white mb-2">"Fix products with missing SKU"</div>
-              <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 mb-4">
-                <div className="text-sm text-slate-300 mb-3">Found 82 products without SKU. Proposed changes:</div>
-                <div className="font-mono text-xs text-emerald-400 bg-slate-900/50 p-3 rounded border border-slate-800">
-                  + 82 SKU generated automatically based on product names.
-                </div>
+            <div className="relative z-10 space-y-4">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-slate-400">Total Requests</span>
+                <span className="text-white font-medium">{metrics?.totalAgentRequests || 0}</span>
               </div>
-              <div className="flex items-center gap-3">
-                <Button className="bg-indigo-600 hover:bg-indigo-500 text-white">Approve 82 changes</Button>
-                <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white">Review manually</Button>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-slate-400">Product Lookups</span>
+                <span className="text-white font-medium">{metrics?.productLookups || 0}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-slate-400">Checkouts Created</span>
+                <span className="text-white font-medium">{metrics?.checkoutsCreated || 0}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm pt-4 border-t border-slate-800">
+                <span className="text-slate-400">Avg Latency</span>
+                <span className="text-white font-mono text-xs bg-slate-800 px-2 py-1 rounded">{metrics?.avgLatencyMs ? `${metrics.avgLatencyMs.toFixed(0)}ms` : '0ms'}</span>
               </div>
             </div>
           </div>
@@ -168,37 +127,7 @@ export default function Overview() {
             </div>
             
             <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
-              <LiveActivityFeed />
-            </div>
-          </div>
-
-          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs">
-            <h3 className="text-xs font-bold tracking-wider uppercase text-slate-400 mb-4 flex items-center gap-2">
-              <ShieldCheck size={14} className="text-emerald-500" /> Merchant Health
-            </h3>
-            
-            <div className="flex items-end gap-2 mb-6">
-              <div className="text-3xl font-bold text-slate-900">92</div>
-              <div className="text-sm font-medium text-emerald-600 mb-1 flex items-center"><TrendingUp size={14} className="mr-1"/> Excellent</div>
-            </div>
-            
-            <div className="space-y-4">
-              {[
-                { name: "Catalog Health", score: 98, color: "emerald" },
-                { name: "Agent Readiness", score: 85, color: "indigo" },
-                { name: "API & Webhooks", score: 100, color: "emerald" },
-                { name: "Security", score: 90, color: "emerald" }
-              ].map(metric => (
-                <div key={metric.name}>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 mb-1.5">
-                    <span>{metric.name}</span>
-                    <span>{metric.score}/100</span>
-                  </div>
-                  <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                    <div className={`h-full bg-${metric.color}-500 rounded-full`} style={{ width: `${metric.score}%` }} />
-                  </div>
-                </div>
-              ))}
+              <LiveActivityFeed orders={orders} />
             </div>
           </div>
 
