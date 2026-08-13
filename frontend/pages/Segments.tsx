@@ -123,25 +123,24 @@ export default function Segments() {
                 <Users size={14} className="text-emerald-500" /> Estimated Audience
               </h3>
               
-              <div className="text-4xl font-bold text-white mb-2">1,284</div>
+              <div className="text-4xl font-bold text-white mb-2">--</div>
               <div className="text-sm text-slate-400 mb-6">Customers match these criteria</div>
 
               <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-4 space-y-3">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-400">Average LTV</span>
-                  <span className="text-white font-semibold">Rp11.2M</span>
+                  <span className="text-white font-semibold">--</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-400">Total Potential Value</span>
-                  <span className="text-emerald-400 font-bold tracking-wide">Rp14.3B</span>
+                  <span className="text-emerald-400 font-bold tracking-wide">--</span>
                 </div>
               </div>
             </div>
             
             <div className="border-t border-slate-800 p-4 bg-slate-950/50">
               <div className="text-xs font-semibold text-slate-500 flex items-center justify-between">
-                <div>Audience Quality: <span className="text-emerald-500 font-bold ml-1">Very High</span></div>
-                <CheckCircle2 size={14} className="text-emerald-500" />
+                <div>Audience Quality: <span className="text-slate-500 font-bold ml-1">Pending</span></div>
               </div>
             </div>
           </div>

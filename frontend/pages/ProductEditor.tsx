@@ -78,7 +78,8 @@ export default function ProductEditor() {
     try {
       if (isNew) {
         const res = await backend.catalog.createProduct({ organizationId: orgId, title, description, brand, category, productUrl, primaryImageUrl });
-        const pid = res.product.id;
+        const pid = res?.product?.id;
+        if (!pid) throw new Error("Failed to create product, no ID returned.");
         for (const v of variants) {
           await backend.catalog.createVariant({
             id: pid,
