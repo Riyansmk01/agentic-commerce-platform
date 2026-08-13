@@ -41,10 +41,19 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 }
 
 function AppRouter() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <Routes>
-      <Route path="/" element={<Landing />} />
+      <Route path="/" element={user ? <Navigate to="/app/overview" replace /> : <Landing />} />
       <Route path="/developers" element={<Developers />} />
       <Route path="/security" element={<Security />} />
       <Route path="/auth" element={user ? <Navigate to="/app/overview" replace /> : <Auth />} />

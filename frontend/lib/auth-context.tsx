@@ -20,12 +20,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // 1. Initial check for local stored user in localStorage
     const stored = getStoredUser();
-    if (stored) {
-      setUser(stored);
-      setIsLoading(false);
-    }
 
-    // 2. Listen to Supabase auth state changes (Google OAuth callback & session restore)
+    // 2. Fetch session properly from Supabase before listening to changes
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (session?.user) {
+        const su = session.user;
+        const currentStored = getStoredUser();
+        const googleUser: AuthUser = {
+          id: su.id,
+          email: su.email ?? "user@domain.com",
+          name: su.user_metadata?.full_name || su.user_metadata?.name || su.email?.split("@")[0] || "Merchant User",
+          role: "owner",
+          avatarUrl: su.user_metadata?.avatar_url || su.user_metadata?.picture,
+          provider: "google",
+          organizationId: currentStored?.organizationId || "org_corestudy_01",
+          organizationSlug: currentStored?.organizationSlug || "corestudy",
+        };
+        setStoredUser(googleUser);
+        setUser(googleUser);
+      } else if (stored) {
+        // Fallback to local storage if Supabase says no session but we have one
+        // Note: In a real app we might want to clear it if Supabase session is dead
+        setUser(stored);
+      }
+      
+      // Clean up messy OAuth token hash from URL bar
+      if (window.location.hash.includes("access_token")) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+
+      setIsLoading(false);
+    });
+
+    // 3. Listen to future auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_OUT") {
         clearStoredUser();
@@ -45,13 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
         setStoredUser(googleUser);
         setUser(googleUser);
-
-        // Clean up messy OAuth token hash from URL bar
-        if (window.location.hash.includes("access_token")) {
-          window.history.replaceState(null, "", window.location.pathname);
-        }
       }
-      setIsLoading(false);
     });
 
     return () => {
@@ -63,20 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await supabaseSignInWithGoogle();
     } catch (err) {
-      console.warn("Supabase Google OAuth trigger error, falling back to instant Google demo sign-in:", err);
-      // Fallback demo Google user if Supabase redirect fails or running offline
-      const demoGoogleUser: AuthUser = {
-        id: `usr_google_${Math.random().toString(36).slice(2, 9)}`,
-        email: "merchant.google@example.com",
-        name: "CoreStudy Merchant User",
-        role: "owner",
-        avatarUrl: "https://lh3.googleusercontent.com/a/default-user=s96-c",
-        provider: "google",
-        organizationId: "org_corestudy_01",
-        organizationSlug: "corestudy",
-      };
-      setStoredUser(demoGoogleUser);
-      setUser(demoGoogleUser);
+      console.warn("Supabase Google OAuth trigger error:", err);
     }
   };
 

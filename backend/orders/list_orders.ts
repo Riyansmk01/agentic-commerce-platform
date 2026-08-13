@@ -2,6 +2,7 @@ import { api } from "encore.dev/api";
 import { Query } from "encore.dev/api";
 import db from "./db";
 import { Order } from "./types";
+import { requireOrgMember } from "../auth/helpers";
 
 interface ListOrdersParams {
   organizationId: Query<string>;
@@ -15,8 +16,10 @@ interface ListOrdersResponse { orders: Order[]; total: number; }
 
 // Lists all orders for a merchant with optional status filters.
 export const listOrders = api<ListOrdersParams, ListOrdersResponse>(
-  { expose: true, method: "GET", path: "/orders" },
+  { expose: true, auth: true, method: "GET", path: "/orders" },
   async (req) => {
+    await requireOrgMember(req.organizationId);
+
     const limit = req.limit ?? 50;
     const offset = req.offset ?? 0;
     const paymentStatus = req.paymentStatus ?? null;

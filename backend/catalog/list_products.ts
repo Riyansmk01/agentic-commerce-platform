@@ -3,6 +3,7 @@ import { Query } from "encore.dev/api";
 import db from "./db";
 import { Product } from "./types";
 import { getVariantsForProduct } from "./helpers";
+import { requireOrgMember } from "../auth/helpers";
 
 interface ListProductsParams {
   organizationId: Query<string>;
@@ -20,8 +21,10 @@ interface ListProductsResponse {
 
 // Lists all products for a merchant organization with optional filters.
 export const listProducts = api<ListProductsParams, ListProductsResponse>(
-  { expose: true, method: "GET", path: "/products" },
+  { expose: true, auth: true, method: "GET", path: "/products" },
   async (req) => {
+    await requireOrgMember(req.organizationId);
+
     const limit = req.limit ?? 50;
     const offset = req.offset ?? 0;
     const status = req.status ?? null;

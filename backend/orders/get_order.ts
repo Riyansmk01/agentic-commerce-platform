@@ -1,13 +1,14 @@
 import { api, APIError } from "encore.dev/api";
 import db from "./db";
 import { Order } from "./types";
+import { requireOrgMember } from "../auth/helpers";
 
 interface GetOrderParams { id: string; }
 interface GetOrderResponse { order: Order; }
 
 // Retrieves a single order with all its items.
 export const getOrder = api<GetOrderParams, GetOrderResponse>(
-  { expose: true, method: "GET", path: "/orders/:id" },
+  { expose: true, auth: true, method: "GET", path: "/orders/:id" },
   async (req) => {
     const row = await db.queryRow<{
       id: string; organization_id: string; order_number: string; checkout_session_id: string;
@@ -18,6 +19,8 @@ export const getOrder = api<GetOrderParams, GetOrderResponse>(
       placed_at: Date; paid_at: Date | null; created_at: Date; updated_at: Date;
     }>`SELECT * FROM orders WHERE id = ${req.id}`;
     if (!row) throw APIError.notFound("order not found");
+
+    await requireOrgMember(row.organization_id);
 
     const items = await db.queryAll<{
       id: string; order_id: string; product_id: string; variant_id: string;

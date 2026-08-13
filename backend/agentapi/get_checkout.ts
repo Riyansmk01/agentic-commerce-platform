@@ -26,7 +26,7 @@ export const getCheckout = api<GetCheckoutParams, GetCheckoutResponse>(
         checkoutId: session.id, publicId: session.publicId, status: session.status,
         totalAmount: session.totalAmount, currency: session.currency,
         expiresAt: session.expiresAt.toISOString(),
-        items: session.items.map(i => ({
+        items: session.items.map((i: any) => ({
           title: i.titleSnapshot, quantity: i.quantity,
           unitAmount: i.unitAmount, lineAmount: i.lineAmount,
         })),
